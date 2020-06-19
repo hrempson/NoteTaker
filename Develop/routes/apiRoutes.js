@@ -1,28 +1,24 @@
 const router = require("express").Router();
-const path = require("path");
-const fs = require("fs");
+const store = require("./../db/store");
 
 router.get("/notes", (req, res) => {
-    //TBD
-    // console.log("READ notes");
-    fs.readFile(path.join(__dirname, "../db/db.json"), "utf8", (err, data) => {
-        res.json(SON.parse(data));
-     });
-});
 
-router.post("/notes", (req, res) => {
-    //TBD
-    console.log("CREATE notes");
+    // Read Notes
 
-    fs.readFile(path.join(__dirname, "../db/db.json"), "utf8", (err, data) => {
-    const data = JSON.parse(data);
-
-    fs.writeFile(path.join(__dirname, "../db/db.json"), "utf8", (err, data) => {
+    store.getNotes().then((notes) => {
+        res.json(notes);
 
     });
 });
 
-router.delete("/note/:id", (req,res) => {
+router.post("/notes", (req, res) => {
+    // console.log("CREATE notes");
+    store.addNote(req.body).then((note) => {
+        res.json(note);
+    });
+});
+
+router.delete("/note/:id", (req, res) => {
     //TBD
     console.log("DELETE notes");
 });
