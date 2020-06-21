@@ -3,24 +3,32 @@ const store = require("./../db/store");
 
 router.get("/notes", (req, res) => {
 
-    // Read Notes
+    store
+    .getNotes()
+    .then((notes) => {
 
-    store.getNotes().then((notes) => {
         res.json(notes);
 
-    });
+    })
+    .catch((err) => res.status(500).json(err));
 });
 
 router.post("/notes", (req, res) => {
-    // console.log("CREATE notes");
-    store.addNote(req.body).then((note) => {
-        res.json(note);
-    });
+    
+    store
+        .addNote(req.body)
+        .then((note) => {
+            console.log(note);
+            res.json(note);
+    })
+    .catch((err) => res.status(500).json(err));
 });
 
-router.delete("/note/:id", (req, res) => {
-    //TBD
-    console.log("DELETE notes");
+router.delete("/notes/:id", (req, res) => {
+   store
+        .deleteNote(req.params.id)
+        .then(() => res.json( {ok: true}) )
+        .catch((err) => res.status(500).json(err));
 });
 
 module.exports = router;
