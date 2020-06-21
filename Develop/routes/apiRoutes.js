@@ -1,6 +1,12 @@
 const router = require("express").Router();
 const store = require("./../db/store");
+const express = require("express");
+const app = express();
 
+app.get("/", function (req, res) {
+    console.log("Yes!");
+    res.end("Develop/routes/htmlRoutes.js");
+});
 
 router.get("/notes", (req, res) => {
 
