@@ -39,8 +39,7 @@ class Store {
         .then((notes) => {
 
         const newNote = { ...note, id: uuidv1() };
-        notes.push( newNote )
-        console.log(notes);
+        notes.push( newNote );
 
        return this.saveNotes(notes).then(() => newNote);
      });
